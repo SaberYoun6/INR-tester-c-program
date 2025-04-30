@@ -1,19 +1,19 @@
 #include <stdio.h>
-#include <pigpio.h>
+#include <wiringPI.h>
 #include "iNR.h"
 //#include <thread.h>
 int main(int argc, char *argv[])
 {
-    unsigned ligSrc,irSnr;
-    double irLigSnr0;
+    int ligSrc,irSnr;
+    double irLigHitSnr0;
 
-    ligSrc=24;
-    irSnr=18;
+
+    ligSrc=5;
+    irSnr=22;
     
-    irLigSnr0=lightSensor(ligSrc,irSnr);
+    irLigHitSnr0=lightHittingSensor(ligSrc,irSnr);
 
-    printf("%f is the amount of time it took for the sensors to detect the light,the pins are located in  which are dectecting the light %u, %u \n",irLigSnr0,ligSrc,irSnr);
-    gpioTerminate();
+    printf("%f is the amount of time it took for the sensors to detect the light,the pins are located in  which are dectecting the light %u, %u \n",irLigHitSnr0,ligSrc,irSnr);
 
     return 0;
 }

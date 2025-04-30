@@ -1,49 +1,42 @@
 #define "iNR.h"
+#include <stdio.h>
+#include<stdlib.h>
+#include<wiringPi.h>
 
-double lightSensor(unsigned lightSource, unsigned irSenor)
+
+
+double lightHittingSensor (int lightsource, int sensor)
 {
-    double start,init,final;
-    int value = 0;
+	//  Infar Red light source Physical Pin lightsource=(18,16,15,22), BCM lightsourceGPIO = (24,23,22,25) and WiringPI pin lightsource = pin (5,4,3,6)
+    const int iRLightSource = lightsource;
+    // InFar red Light dectector source Physical Pin senosr = (31,29,11,13)  BCM sensors GPIO= (6,5,17,27) wiriingPI Physical Pin sensor = (22,21,0,2)
+    const int iRSensor = sensor;
+    
+    wiringPiSetup();
+    pinMode(iRSensor,INPUT);
+    pinMode(lightsource,OUTPUT);
 
-  if (gpioInitialise() < 0)
-  {
-      fprintf(stderr, "pigpio initialisation failed\n");
-      return 1;
-  }
- 
-  gpioSetMode(lightSource, PI_OUTPUT);
-  gpioSetMode(irSensor,PI_INPUT);
+    fprintf(stderr, "Running on Raspberry Pi Revision %d\n",piBoardRev());
+    double start,fin =  0.0
 
-  start = time_time();
-  while ((time_time() -start ) < 30.00)
-  {
-      printf("Light turns on\n");
-      gpioWrite(lightSource,1);
-      
-      time_sleep(10.0);
-
-      printf("Light Turnned off\n");
-      gpioWrite(lightSource,0);
-      time_sleep(10.0);
-  }
-  init=time_time();
-  final= 0.0;
-  while ((time_time()/3600 - init) < 60.0 || value == 0 )
-  {
-      gpioWrite(lightSource,1);
-      final=time_time();
-
-      if (gpioRead(irSensor)==1)
-      {
-          gpioWrite(lightSource,0);
-          final=time_time() - init;
-          value = 1;
-      } else {
-          gpioWrite(lightSource,0);
-          final=time_time() - init;
-      }
-  }
-  return final;
+    while(1) {
+	    for i = 0; i < 0; i++){
+		    if (i & 1) {
+			    digitalWrite(lightsource, HIGH);
+		    }else{
+			    fin=i++
+			    digitalWrite(lightsource,LOW);
+		    }
+	    }
+	    if (digitalRead(iRSenor) == HIGH) {
+		    
+		    digitalWrite(lightsource, LOW);
+		    // sf stands for start finish
+		    double sf = 0.0;
+		    return sf = fin - start ;
+		    exit(1);
+	    }
+    }
 }
 
 

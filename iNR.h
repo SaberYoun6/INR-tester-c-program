@@ -1,1 +1,2 @@
-double lightSensor(unsigned a, unsigned b); 
+double lightHittingSensor(int WiringPilightSource, int WiringPiSensor); 
+
